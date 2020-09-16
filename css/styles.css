@@ -58,6 +58,10 @@ body {
     padding: 10px;
 }
 
+#note-name:focus, #note-text:focus, #delete-note:focus {
+    outline: none;
+}
+
 #delete-note {
     display: block;
     float: left;
@@ -69,6 +73,10 @@ body {
 
 #delete-note:hover {
     background-color: #403D39;
+}
+
+#delete-note:active {
+    background-color: #514e49;
 }
 
 #note-text {
