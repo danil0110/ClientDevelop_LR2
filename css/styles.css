@@ -27,11 +27,15 @@ body {
     width: 1200px;
     height: 800px;
     margin: 0 auto;
-    box-shadow: #0c0c0c 15px 10px 20px, #0c0c0c -15px 10px 20px;
+    box-shadow: #0c0c0c 15px 10px 20px,
+                #0c0c0c -15px 10px 20px;
 }
 
 #notes-block {
     float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 400px;
     height: 800px;
     background-color: #403D39;
@@ -94,10 +98,8 @@ body {
 
 .note-list {
     list-style: none;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
+    overflow: hidden;
+    overflow-y: scroll;
     margin: 0;
     padding: 0;
     height: 800px;
@@ -106,23 +108,45 @@ body {
 .note-single {
     background-color: #181817;
     text-align: center;
-    width: 400px;
+    width: 395px;
     height: 100px;
 }
 
-#add-button {
-    width: 70px;
-    height: 45px;
-    font-size: 36px;
-    margin-top: 10px;
+#add-note {
+    display: block;
+    box-sizing: border-box;
+    margin: 10px;
+    width: 100px;
+    padding: 10px;
     transition: all 0.1s ease;
 }
 
-#add-button:hover {
+#add-note:hover {
     background-color: #252422;
     cursor: pointer;
 }
 
-#add-button:active {
+#add-note:active {
     background-color: #292926;
+    border: none;
+}
+
+#add-note:focus {
+    outline: none;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #555555;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bbbbbb;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
 }
