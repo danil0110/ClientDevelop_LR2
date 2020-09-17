@@ -22,7 +22,7 @@ body {
     color: white;
 }
 
-#content {
+#container {
     background-color: #252422;
     width: 1200px;
     height: 800px;
@@ -30,7 +30,7 @@ body {
     box-shadow: #0c0c0c 15px 10px 20px, #0c0c0c -15px 10px 20px;
 }
 
-#note-menu {
+#notes-block {
     float: left;
     width: 400px;
     height: 800px;
@@ -72,10 +72,12 @@ body {
     margin: 10px;
     width: 100px;
     padding: 10px;
+    transition: all 0.1s ease;
 }
 
 #delete-note:hover {
     background-color: #403D39;
+    cursor: pointer;
 }
 
 #delete-note:active {
@@ -88,4 +90,39 @@ body {
     width: 760px;
     height: 705px;
     padding: 10px;
+}
+
+.note-list {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    height: 800px;
+}
+
+.note-single {
+    background-color: #181817;
+    text-align: center;
+    width: 400px;
+    height: 100px;
+}
+
+#add-button {
+    width: 70px;
+    height: 45px;
+    font-size: 36px;
+    margin-top: 10px;
+    transition: all 0.1s ease;
+}
+
+#add-button:hover {
+    background-color: #252422;
+    cursor: pointer;
+}
+
+#add-button:active {
+    background-color: #292926;
 }
