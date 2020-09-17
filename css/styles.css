@@ -13,6 +13,8 @@ body {
     font-size: 36px;
     font-weight: bold;
     padding: 10px 0 10px;
+    z-index: 1;
+    box-shadow: #0c0c0c 0 0 20px;
 }
 
 #navbar > a {
@@ -24,7 +26,8 @@ body {
     background-color: #252422;
     width: 1200px;
     height: 800px;
-    margin: 0 auto; /* TODO: implement shadow */
+    margin: 0 auto;
+    box-shadow: #0c0c0c 15px 10px 20px, #0c0c0c -15px 10px 20px;
 }
 
 #note-menu {
