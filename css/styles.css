@@ -99,7 +99,7 @@ body {
 .note-list {
     list-style: none;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin: 0;
     padding: 0;
     height: 800px;
@@ -111,6 +111,8 @@ body {
     width: 395px;
     height: 100px;
 }
+
+/* TODO: fix scrollbar */
 
 #add-note {
     display: block;
