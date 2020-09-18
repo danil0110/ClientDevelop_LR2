@@ -15,7 +15,17 @@ function addNote() {
 }
 
 function deleteNote() {
-    let notes = document.querySelectorAll('.note-single');
-    let list = document.querySelector('.note-list');
-    list.removeChild(notes[notes.length - 1]);
+    if (confirm('Are you sure?')) {
+        let notes = document.querySelectorAll('.note-single');
+        let list = document.querySelector('.note-list');
+        list.removeChild(notes[notes.length - 1]);   
+    }
+}
+
+document.getElementById('note-name').oninput = () => {
+    document.getElementById('note-name-preview').innerHTML = document.getElementById('note-name').value;
+}
+
+document.getElementById('note-text').oninput = () => {
+    document.getElementById('note-text-preview').innerHTML = document.getElementById('note-text').value;
 }
