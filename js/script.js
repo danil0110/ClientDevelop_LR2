@@ -24,6 +24,24 @@ function deleteNote() {
 
 document.getElementById('note-name').oninput = () => {
     document.getElementById('note-name-preview').innerHTML = document.getElementById('note-name').value;
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    if (day < 10) {
+        day = '0' + day;
+    }
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (hours < 10) {
+        hours = '0' + hours;
+    }
+    if (minutes < 10) {
+        minutes = '0' + minutes;
+    }
+    document.getElementById('note-date').innerHTML = day + '.' + month + '.' + date.getFullYear() + ' ' + hours + ':' + minutes;
 }
 
 document.getElementById('note-text').oninput = () => {
