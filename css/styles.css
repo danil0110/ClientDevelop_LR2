@@ -106,6 +106,7 @@ body {
 }
 
 .note-single {
+    position: relative;
     background-color: #181817;
     text-align: center;
     width: 400px;
@@ -133,6 +134,45 @@ body {
 
 #add-note:focus {
     outline: none;
+}
+
+#note-name-preview {
+    position: absolute;
+    top: 5px;
+    left: 13%;
+    align-self: center;
+    margin: 0;
+    text-align: center;
+    width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#note-text-preview {
+    position: absolute;
+    top: 42%;
+    left: 13px;
+    margin: 0;
+    width: 380px;
+    font-size: 20px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#note-date {
+    position: absolute;
+    bottom: 5px;
+    left: 13px;
+    margin: 0;
+    width: 380px;
+    font-size: 16px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 ::-webkit-scrollbar {
