@@ -107,10 +107,24 @@ body {
 
 .note-single {
     position: relative;
-    background-color: #181817;
+    background-color: #292928;
     text-align: center;
     width: 400px;
     height: 100px;
+}
+
+.note-single:hover {
+    background-color: #1f1f1e;
+    cursor: pointer;
+}
+
+.note-chosen {
+    background-color: #181817;
+}
+
+.note-chosen:hover {
+    background-color: #181817;
+    cursor: default;
 }
 
 #add-note {
