@@ -142,13 +142,17 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #555555;
+    background: #ffffff;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #bbbbbb;
+    background: #a8a8a8;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #ffffff;
+    background: #858585;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #5f5f5f;
 }
