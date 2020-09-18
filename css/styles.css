@@ -36,6 +36,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
+    overflow-y: auto;
     width: 400px;
     height: 800px;
     background-color: #403D39;
@@ -98,8 +100,6 @@ body {
 
 .note-list {
     list-style: none;
-    overflow: hidden;
-    overflow-y: auto;
     margin: 0;
     padding: 0;
     height: 800px;
@@ -108,11 +108,9 @@ body {
 .note-single {
     background-color: #181817;
     text-align: center;
-    width: 395px;
+    width: 400px;
     height: 100px;
 }
-
-/* TODO: fix scrollbar */
 
 #add-note {
     display: block;
