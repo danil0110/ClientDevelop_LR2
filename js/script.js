@@ -24,6 +24,15 @@ function deleteNote() {
 
 document.getElementById('note-name').oninput = () => {
     document.getElementById('note-name-preview').innerHTML = document.getElementById('note-name').value;
+    updateDate();
+}
+
+document.getElementById('note-text').oninput = () => {
+    document.getElementById('note-text-preview').innerHTML = document.getElementById('note-text').value;
+    updateDate();
+}
+
+function updateDate() {
     let date = new Date();
     let day = date.getDate();
     let month = date.getMonth();
@@ -42,8 +51,4 @@ document.getElementById('note-name').oninput = () => {
         minutes = '0' + minutes;
     }
     document.getElementById('note-date').innerHTML = day + '.' + month + '.' + date.getFullYear() + ' ' + hours + ':' + minutes;
-}
-
-document.getElementById('note-text').oninput = () => {
-    document.getElementById('note-text-preview').innerHTML = document.getElementById('note-text').value;
 }
