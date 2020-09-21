@@ -5,8 +5,10 @@ function addNote() {
         name: '',
         body: '',
         date: updateDate(),
+        selected: true,
     }
 
+    unselectCurrentNote();
     notesArray.unshift(newNote);
     let noteName = document.createElement('p');
     let noteText = document.createElement('p');
@@ -16,27 +18,13 @@ function addNote() {
     noteDate.id = 'note-date';
     noteDate.innerHTML = newNote.date;
     let noteElement = document.createElement('li');
-    noteElement.classList.add('note-single');
+    noteElement.classList.add('note-chosen', 'note-single');
     noteElement.appendChild(noteName);
     noteElement.appendChild(noteText);
     noteElement.appendChild(noteDate);
     document.querySelector('.note-list').insertBefore(noteElement, document.querySelector('.note-list').firstChild);
-    console.log(notesArray);
-
-
-    // let note = document.createElement('li');
-    // note.classList.add('note-single');
-    // let noteName = document.createElement('p');
-    // let noteText = document.createElement('p');
-    // let noteDate = document.createElement('p');
-    // noteName.id = 'note-name-preview';
-    // noteText.id = 'note-text-preview';
-    // noteDate.id = 'note-date';
-    // noteDate.innerHTML = '18.09.2020';
-    // note.appendChild(noteName);
-    // note.appendChild(noteText);
-    // note.appendChild(noteDate);
-    // document.querySelector('.note-list').appendChild(note);
+    document.getElementById('note-name').value = '';
+    document.getElementById('note-text').value = '';
 }
 
 function deleteNote() {
@@ -60,7 +48,7 @@ document.getElementById('note-text').oninput = () => {
 function updateDate() {
     let date = new Date();
     let day = date.getDate();
-    let month = date.getMonth();
+    let month = date.getMonth() + 1;
     let hours = date.getHours();
     let minutes = date.getMinutes();
     if (day < 10) {
@@ -76,6 +64,20 @@ function updateDate() {
         minutes = '0' + minutes;
     }
     return day + '.' + month + '.' + date.getFullYear() + ' ' + hours + ':' + minutes;
+}
+
+function unselectCurrentNote() {
+    let chosenNote = document.querySelector('.note-chosen');
+    console.log(chosenNote);
+    if (chosenNote != null) {
+        chosenNote.classList.remove('note-chosen');
+    }
+    for (let i = 0; i < notesArray.length; i++) {
+        if (notesArray[i].selected) {
+            notesArray[i].selected = false;
+            break;
+        }
+    }
 }
 
 function pageLoaded() {
