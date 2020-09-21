@@ -2,14 +2,15 @@ var notesArray = new Array;
 
 function addNote() {
     let newNote = {
+        id: generateID(),
         name: '',
         body: '',
         date: updateDate(),
         selected: true,
     }
-
     unselectCurrentNote();
     notesArray.unshift(newNote);
+    unlockInputs();
     let noteName = document.createElement('p');
     let noteText = document.createElement('p');
     let noteDate = document.createElement('p');
@@ -19,6 +20,7 @@ function addNote() {
     noteDate.innerHTML = newNote.date;
     let noteElement = document.createElement('li');
     noteElement.classList.add('note-chosen', 'note-single');
+    noteElement.id = newNote.id;
     noteElement.appendChild(noteName);
     noteElement.appendChild(noteText);
     noteElement.appendChild(noteDate);
@@ -29,20 +31,29 @@ function addNote() {
 
 function deleteNote() {
     if (confirm('Are you sure?')) {
-        let notes = document.querySelectorAll('.note-single');
-        let list = document.querySelector('.note-list');
-        list.removeChild(notes[notes.length - 1]);   
+        let selectedNote = document.querySelector('.note-chosen');
+        let objIndex;
+        for (let i = 0; i < notesArray.length; i++) {
+            if (selectedNote.id === notesArray[i].id) {
+                notesArray.splice(i, 1);
+                document.querySelector('.note-list').removeChild(document.querySelector('.note-list').children[i]);
+                break;
+            }
+        }
+        document.getElementById('note-name').value = '';
+        document.getElementById('note-text').value = '';
+        lockInputs();
     }
 }
 
 document.getElementById('note-name').oninput = () => {
-    document.getElementById('note-name-preview').innerHTML = document.getElementById('note-name').value;
-    document.getElementById('note-date').innerHTML = updateDate();
+    document.querySelector('.note-chosen').children[0].innerHTML = document.getElementById('note-name').value;
+    document.querySelector('.note-chosen').children[2].innerHTML = updateDate();
 }
 
 document.getElementById('note-text').oninput = () => {
-    document.getElementById('note-text-preview').innerHTML = document.getElementById('note-text').value;
-    document.getElementById('note-date').innerHTML = updateDate();
+    document.querySelector('.note-chosen').children[1].innerHTML = document.getElementById('note-text').value;
+    document.querySelector('.note-chosen').children[2].innerHTML = updateDate();
 }
 
 function updateDate() {
@@ -74,12 +85,57 @@ function unselectCurrentNote() {
     }
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected) {
+            notesArray[i].name = document.getElementById('note-name').value;
+            notesArray[i].body = document.getElementById('note-text').value;
             notesArray[i].selected = false;
             break;
         }
     }
 }
 
-function pageLoaded() {
+document.querySelector('.note-list').onclick = function(event) {
+    let target;
+    if (event.target.tagName === 'UL') {
+        return;
+    }
+    if (event.target.tagName != 'LI') {
+        target = event.target.parentNode;
+    } else {
+        target = event.target;
+    }
+    unselectCurrentNote();
 
+    let selectedNote;
+    for (let i = 0; i < notesArray.length; i++) {
+        if (target.id === notesArray[i].id) {
+            selectedNote = notesArray[i];
+            break;
+        }
+    }
+    target.classList.remove('note-single');
+    target.classList.add('note-chosen', 'note-single');
+    document.getElementById('note-name').value = selectedNote.name;
+    document.getElementById('note-text').value = selectedNote.body;
+    selectedNote.selected = true;
+    unlockInputs();
+}
+
+function generateID() {
+    return `f${(~~(Math.random()*1e8)).toString(16)}`;
+}
+
+function lockInputs() {
+    document.getElementById('note-name').disabled = true;
+    document.getElementById('delete-note').disabled = true;
+    document.getElementById('note-text').disabled = true;
+}
+
+function unlockInputs() {
+    document.getElementById('note-name').disabled = false;
+    document.getElementById('delete-note').disabled = false;
+    document.getElementById('note-text').disabled = false;
+}
+
+if (notesArray.length == 0) {
+    lockInputs();
 }
