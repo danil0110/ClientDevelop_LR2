@@ -66,6 +66,7 @@ document.getElementById('note-name').onchange = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
             notesArray[i].name = document.getElementById('note-name').value;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerHTML;
             break;
         }
     }
@@ -76,6 +77,7 @@ document.getElementById('note-text').onchange = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
             notesArray[i].body = document.getElementById('note-text').value;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerHTML;
             break;
         }
     }
@@ -87,6 +89,7 @@ window.onbeforeunload = () => {
         if (notesArray[i].selected === true) {
             notesArray[i].name = document.getElementById('note-name').value;
             notesArray[i].body = document.getElementById('note-text').value;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerHTML;
             break;
         }
     }
