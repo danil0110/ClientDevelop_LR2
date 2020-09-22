@@ -188,6 +188,9 @@ function sortNoteMenu() {
 }
 
 window.onload = () => {
+    lockInputs();
+    document.getElementById('note-name').value = '';
+    document.getElementById('note-text').value = '';
     if (JSON.parse(localStorage.getItem('storedNotes')) === null) {
         return;
     }
