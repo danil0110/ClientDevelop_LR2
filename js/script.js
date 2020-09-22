@@ -62,6 +62,37 @@ document.getElementById('note-text').oninput = () => {
     document.querySelector('.note-chosen').children[2].innerHTML = updateDate();
 }
 
+document.getElementById('note-name').onchange = () => {
+    for (let i = 0; i < notesArray.length; i++) {
+        if (notesArray[i].selected === true) {
+            notesArray[i].name = document.getElementById('note-name').value;
+            break;
+        }
+    }
+    console.log(notesArray);
+}
+
+document.getElementById('note-text').onchange = () => {
+    for (let i = 0; i < notesArray.length; i++) {
+        if (notesArray[i].selected === true) {
+            notesArray[i].body = document.getElementById('note-text').value;
+            break;
+        }
+    }
+    console.log(notesArray);
+}
+
+window.onbeforeunload = () => {
+    for (let i = 0; i < notesArray.length; i++) {
+        if (notesArray[i].selected === true) {
+            notesArray[i].name = document.getElementById('note-name').value;
+            notesArray[i].body = document.getElementById('note-text').value;
+            break;
+        }
+    }
+    localStorage.setItem('storedNotes', JSON.stringify(notesArray));
+}
+
 function updateDate() {
     let date = new Date();
     let day = date.getDate();
@@ -85,14 +116,11 @@ function updateDate() {
 
 function unselectCurrentNote() {
     let chosenNote = document.querySelector('.note-chosen');
-    console.log(chosenNote);
     if (chosenNote != null) {
         chosenNote.classList.remove('note-chosen');
     }
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected) {
-            notesArray[i].name = document.getElementById('note-name').value;
-            notesArray[i].body = document.getElementById('note-text').value;
             notesArray[i].selected = false;
             break;
         }
@@ -156,6 +184,27 @@ function sortNoteMenu() {
     }
 }
 
-if (notesArray.length == 0) {
-    lockInputs();
+window.onload = () => {
+    if (JSON.parse(localStorage.getItem('storedNotes')) === null) {
+        return;
+    }
+    notesArray = JSON.parse(localStorage.getItem('storedNotes'));
+    for (let i = 0; i < notesArray.length; i++) {
+        let noteName = document.createElement('p');
+        let noteText = document.createElement('p');
+        let noteDate = document.createElement('p');
+        noteName.id = 'note-name-preview';
+        noteText.id = 'note-text-preview';
+        noteDate.id = 'note-date';
+        noteName.innerHTML = notesArray[i].name;
+        noteText.innerHTML = notesArray[i].body;
+        noteDate.innerHTML = notesArray[i].date;
+        let noteElement = document.createElement('li');
+        noteElement.classList.add('note-single');
+        noteElement.id = notesArray[i].id;
+        noteElement.appendChild(noteName);
+        noteElement.appendChild(noteText);
+        noteElement.appendChild(noteDate);
+        document.querySelector('.note-list').appendChild(noteElement);
+    }
 }
