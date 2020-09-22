@@ -47,11 +47,17 @@ function deleteNote() {
 }
 
 document.getElementById('note-name').oninput = () => {
+    if (notesArray[0].selected === false) {
+        sortNoteMenu();
+    }
     document.querySelector('.note-chosen').children[0].innerHTML = document.getElementById('note-name').value;
     document.querySelector('.note-chosen').children[2].innerHTML = updateDate();
 }
 
 document.getElementById('note-text').oninput = () => {
+    if (notesArray[0].selected === false) {
+        sortNoteMenu();
+    }
     document.querySelector('.note-chosen').children[1].innerHTML = document.getElementById('note-text').value;
     document.querySelector('.note-chosen').children[2].innerHTML = updateDate();
 }
@@ -134,6 +140,20 @@ function unlockInputs() {
     document.getElementById('note-name').disabled = false;
     document.getElementById('delete-note').disabled = false;
     document.getElementById('note-text').disabled = false;
+}
+
+function sortNoteMenu() {
+    for (let i = 0; i < notesArray.length; i++) {
+         if (notesArray[i].selected === true) {
+            let tempArrayEl = notesArray[i];
+            notesArray.splice(i, 1);
+            notesArray.unshift(tempArrayEl);
+            let tempNoteEl = document.querySelector('.note-chosen');
+            document.querySelector('.note-list').removeChild(document.querySelector('.note-list').children[i]);
+            document.querySelector('.note-list').insertBefore(tempNoteEl, document.querySelector('.note-list').firstChild);
+            break;
+        }
+    }
 }
 
 if (notesArray.length == 0) {
