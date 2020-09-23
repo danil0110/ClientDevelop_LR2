@@ -1,5 +1,6 @@
-var notesArray = new Array;
+var notesArray = new Array; // Массив заметок
 
+// Добавление заметки
 function addNote() {
     let newNote = {
         id: generateID(),
@@ -27,8 +28,10 @@ function addNote() {
     document.querySelector('.note-list').insertBefore(noteElement, document.querySelector('.note-list').firstChild);
     document.getElementById('note-name').value = '';
     document.getElementById('note-text').value = '';
+    location.hash = newNote.id;
 }
 
+// Удаление заметки
 function deleteNote() {
     if (confirm('Are you sure?')) {
         let selectedNote = document.querySelector('.note-chosen');
@@ -42,10 +45,12 @@ function deleteNote() {
         }
         document.getElementById('note-name').value = '';
         document.getElementById('note-text').value = '';
+        location.hash = '';
         lockInputs();
     }
 }
 
+// Редактирование имени заметки
 document.getElementById('note-name').oninput = () => {
     if (notesArray[0].selected === false) {
         sortNoteMenu();
@@ -54,6 +59,7 @@ document.getElementById('note-name').oninput = () => {
     document.querySelector('.note-chosen').children[2].innerText = updateDate();
 }
 
+// Редактирование текста заметки
 document.getElementById('note-text').oninput = () => {
     if (notesArray[0].selected === false) {
         sortNoteMenu();
@@ -62,6 +68,7 @@ document.getElementById('note-text').oninput = () => {
     document.querySelector('.note-chosen').children[2].innerText = updateDate();
 }
 
+// Запись в LocalStorage && потеря фокуса имени заметки
 document.getElementById('note-name').onchange = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
@@ -70,9 +77,10 @@ document.getElementById('note-name').onchange = () => {
             break;
         }
     }
-    console.log(notesArray);
+    localStorage.setItem('storedNotes', JSON.stringify(notesArray));
 }
 
+// Запись в LocalStorage && потеря фокуса текста заметки
 document.getElementById('note-text').onchange = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
@@ -81,9 +89,10 @@ document.getElementById('note-text').onchange = () => {
             break;
         }
     }
-    console.log(notesArray);
+    localStorage.setItem('storedNotes', JSON.stringify(notesArray));
 }
 
+// Запись в LocalStorage перед закрытием страницы
 window.onbeforeunload = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
@@ -93,9 +102,11 @@ window.onbeforeunload = () => {
             break;
         }
     }
+    unselectCurrentNote();
     localStorage.setItem('storedNotes', JSON.stringify(notesArray));
 }
 
+// Текущая дата
 function updateDate() {
     let date = new Date();
     let day = date.getDate();
@@ -117,6 +128,7 @@ function updateDate() {
     return day + '.' + month + '.' + date.getFullYear() + ' ' + hours + ':' + minutes;
 }
 
+// Убрать выделение с текущей заметки
 function unselectCurrentNote() {
     let chosenNote = document.querySelector('.note-chosen');
     if (chosenNote != null) {
@@ -130,6 +142,7 @@ function unselectCurrentNote() {
     }
 }
 
+// Выбор заметки
 document.querySelector('.note-list').onclick = function(event) {
     let target;
     if (event.target.tagName === 'UL') {
@@ -154,25 +167,30 @@ document.querySelector('.note-list').onclick = function(event) {
     document.getElementById('note-name').value = selectedNote.name;
     document.getElementById('note-text').value = selectedNote.body;
     selectedNote.selected = true;
+    location.hash = selectedNote.id;
     unlockInputs();
 }
 
+// Генерация уникального идентификатора заметки
 function generateID() {
     return `f${(~~(Math.random()*1e8)).toString(16)}`;
 }
 
+// Блокировка инпутов
 function lockInputs() {
     document.getElementById('note-name').disabled = true;
     document.getElementById('delete-note').disabled = true;
     document.getElementById('note-text').disabled = true;
 }
 
+// Разблокировка инпутов
 function unlockInputs() {
     document.getElementById('note-name').disabled = false;
     document.getElementById('delete-note').disabled = false;
     document.getElementById('note-text').disabled = false;
 }
 
+// Сортировка заметок
 function sortNoteMenu() {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
@@ -187,6 +205,29 @@ function sortNoteMenu() {
     }
 }
 
+// Изменение хеша пользователем
+window.addEventListener('hashchange', () => {
+    for (let i = 0; i < notesArray.length; i++) {
+        if (location.hash === '#' + notesArray[i].id) {
+            let note = document.getElementById(notesArray[i].id);
+            unselectCurrentNote();
+            note.classList.remove('note-single');
+            note.classList.add('note-chosen', 'note-single');
+            notesArray[i].selected = true;
+            document.getElementById('note-name').value = notesArray[i].name;
+            document.getElementById('note-text').value = notesArray[i].body;
+            unlockInputs();
+            return;
+        }
+    }
+    location.hash = '';
+    lockInputs();
+    document.getElementById('note-name').value = '';
+    document.getElementById('note-text').value = '';
+    unselectCurrentNote();
+})
+
+// Выгрузка из LocalStorage при загрузке страницы
 window.onload = () => {
     lockInputs();
     document.getElementById('note-name').value = '';
@@ -212,5 +253,20 @@ window.onload = () => {
         noteElement.appendChild(noteText);
         noteElement.appendChild(noteDate);
         document.querySelector('.note-list').appendChild(noteElement);
+    }
+
+    if (location.hash != '') {
+        for (let i = 0; i < notesArray.length; i++) {
+            if (location.hash === '#' + notesArray[i].id) {
+                let lastNote = document.getElementById(notesArray[i].id);
+                lastNote.classList.remove('note-single');
+                lastNote.classList.add('note-chosen', 'note-single');
+                notesArray[i].selected = true;
+                document.getElementById('note-name').value = notesArray[i].name;
+                document.getElementById('note-text').value = notesArray[i].body;
+                unlockInputs();
+                break;
+            }
+        }
     }
 }
