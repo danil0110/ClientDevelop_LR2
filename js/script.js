@@ -18,7 +18,7 @@ function addNote() {
     noteName.id = 'note-name-preview';
     noteText.id = 'note-text-preview';
     noteDate.id = 'note-date';
-    noteDate.innerText = newNote.date;
+    noteDate.textContent = newNote.date;
     let noteElement = document.createElement('li');
     noteElement.classList.add('note-chosen', 'note-single');
     noteElement.id = newNote.id;
@@ -55,8 +55,8 @@ document.getElementById('note-name').oninput = () => {
     if (notesArray[0].selected === false) {
         sortNoteMenu();
     }
-    document.querySelector('.note-chosen').children[0].innerText = document.getElementById('note-name').value;
-    document.querySelector('.note-chosen').children[2].innerText = updateDate();
+    document.querySelector('.note-chosen').children[0].textContent = document.getElementById('note-name').value;
+    document.querySelector('.note-chosen').children[2].textContent = updateDate();
 }
 
 // Редактирование текста заметки
@@ -64,8 +64,8 @@ document.getElementById('note-text').oninput = () => {
     if (notesArray[0].selected === false) {
         sortNoteMenu();
     }
-    document.querySelector('.note-chosen').children[1].innerText = document.getElementById('note-text').value;
-    document.querySelector('.note-chosen').children[2].innerText = updateDate();
+    document.querySelector('.note-chosen').children[1].textContent = document.getElementById('note-text').value;
+    document.querySelector('.note-chosen').children[2].textContent = updateDate();
 }
 
 // Запись в LocalStorage && потеря фокуса имени заметки
@@ -73,7 +73,7 @@ document.getElementById('note-name').onchange = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
             notesArray[i].name = document.getElementById('note-name').value;
-            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerText;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].textContent;
             break;
         }
     }
@@ -85,7 +85,7 @@ document.getElementById('note-text').onchange = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
             notesArray[i].body = document.getElementById('note-text').value;
-            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerText;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].textContent;
             break;
         }
     }
@@ -98,7 +98,7 @@ window.onbeforeunload = () => {
         if (notesArray[i].selected === true) {
             notesArray[i].name = document.getElementById('note-name').value;
             notesArray[i].body = document.getElementById('note-text').value;
-            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerText;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].textContent;
             break;
         }
     }
@@ -243,9 +243,9 @@ window.onload = () => {
         noteName.id = 'note-name-preview';
         noteText.id = 'note-text-preview';
         noteDate.id = 'note-date';
-        noteName.innerText = notesArray[i].name;
-        noteText.innerText = notesArray[i].body;
-        noteDate.innerText = notesArray[i].date;
+        noteName.textContent = notesArray[i].name;
+        noteText.textContent = notesArray[i].body;
+        noteDate.textContent = notesArray[i].date;
         let noteElement = document.createElement('li');
         noteElement.classList.add('note-single');
         noteElement.id = notesArray[i].id;
