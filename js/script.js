@@ -17,7 +17,7 @@ function addNote() {
     noteName.id = 'note-name-preview';
     noteText.id = 'note-text-preview';
     noteDate.id = 'note-date';
-    noteDate.innerHTML = newNote.date;
+    noteDate.innerText = newNote.date;
     let noteElement = document.createElement('li');
     noteElement.classList.add('note-chosen', 'note-single');
     noteElement.id = newNote.id;
@@ -50,23 +50,23 @@ document.getElementById('note-name').oninput = () => {
     if (notesArray[0].selected === false) {
         sortNoteMenu();
     }
-    document.querySelector('.note-chosen').children[0].innerHTML = document.getElementById('note-name').value;
-    document.querySelector('.note-chosen').children[2].innerHTML = updateDate();
+    document.querySelector('.note-chosen').children[0].innerText = document.getElementById('note-name').value;
+    document.querySelector('.note-chosen').children[2].innerText = updateDate();
 }
 
 document.getElementById('note-text').oninput = () => {
     if (notesArray[0].selected === false) {
         sortNoteMenu();
     }
-    document.querySelector('.note-chosen').children[1].innerHTML = document.getElementById('note-text').value;
-    document.querySelector('.note-chosen').children[2].innerHTML = updateDate();
+    document.querySelector('.note-chosen').children[1].innerText = document.getElementById('note-text').value;
+    document.querySelector('.note-chosen').children[2].innerText = updateDate();
 }
 
 document.getElementById('note-name').onchange = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
             notesArray[i].name = document.getElementById('note-name').value;
-            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerHTML;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerText;
             break;
         }
     }
@@ -77,7 +77,7 @@ document.getElementById('note-text').onchange = () => {
     for (let i = 0; i < notesArray.length; i++) {
         if (notesArray[i].selected === true) {
             notesArray[i].body = document.getElementById('note-text').value;
-            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerHTML;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerText;
             break;
         }
     }
@@ -89,7 +89,7 @@ window.onbeforeunload = () => {
         if (notesArray[i].selected === true) {
             notesArray[i].name = document.getElementById('note-name').value;
             notesArray[i].body = document.getElementById('note-text').value;
-            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerHTML;
+            notesArray[i].date = document.querySelector('.note-chosen').children[2].innerText;
             break;
         }
     }
@@ -175,7 +175,7 @@ function unlockInputs() {
 
 function sortNoteMenu() {
     for (let i = 0; i < notesArray.length; i++) {
-         if (notesArray[i].selected === true) {
+        if (notesArray[i].selected === true) {
             let tempArrayEl = notesArray[i];
             notesArray.splice(i, 1);
             notesArray.unshift(tempArrayEl);
@@ -202,9 +202,9 @@ window.onload = () => {
         noteName.id = 'note-name-preview';
         noteText.id = 'note-text-preview';
         noteDate.id = 'note-date';
-        noteName.innerHTML = notesArray[i].name;
-        noteText.innerHTML = notesArray[i].body;
-        noteDate.innerHTML = notesArray[i].date;
+        noteName.innerText = notesArray[i].name;
+        noteText.innerText = notesArray[i].body;
+        noteDate.innerText = notesArray[i].date;
         let noteElement = document.createElement('li');
         noteElement.classList.add('note-single');
         noteElement.id = notesArray[i].id;
