@@ -29,6 +29,7 @@ function addNote() {
     document.getElementById('note-name').value = '';
     document.getElementById('note-text').value = '';
     location.hash = newNote.id;
+    localStorage.setItem('storedNotes', JSON.stringify(notesArray));
 }
 
 // Удаление заметки
@@ -48,6 +49,7 @@ function deleteNote() {
         location.hash = '';
         lockInputs();
     }
+    localStorage.setItem('storedNotes', JSON.stringify(notesArray));
 }
 
 // Редактирование имени заметки
@@ -256,8 +258,10 @@ window.onload = () => {
     }
 
     if (location.hash != '') {
+        let found;
         for (let i = 0; i < notesArray.length; i++) {
             if (location.hash === '#' + notesArray[i].id) {
+                found = true;
                 let lastNote = document.getElementById(notesArray[i].id);
                 lastNote.classList.remove('note-single');
                 lastNote.classList.add('note-chosen', 'note-single');
@@ -267,6 +271,9 @@ window.onload = () => {
                 unlockInputs();
                 break;
             }
+        }
+        if (!found) {
+            location.hash = '';
         }
     }
 }
